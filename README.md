@@ -56,5 +56,10 @@ npm install
 3. Run the app (Expo)
 npx expo start
 
+![image](https://github.com/user-attachments/assets/b8f6ba50-8541-4de2-8826-3d49f61b1d5b)
+![image](https://github.com/user-attachments/assets/435f30f4-b941-4861-8fdf-4859b6f48a1b)
+
+
+
 
 
