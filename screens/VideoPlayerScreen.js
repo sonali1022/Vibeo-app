@@ -1,17 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Platform,
-  Dimensions,
 } from 'react-native';
 import { Video, Audio } from 'expo-av';
 import Slider from '@react-native-community/slider';
 import { Ionicons } from '@expo/vector-icons';
 import { getWatchProgress, saveWatchProgress } from '../utils/storage';
-import { isVideoDownloaded } from '../utils/download'; // ✅ import this
+import { isVideoDownloaded } from '../utils/download'; 
 
 export default function VideoPlayerScreen({ route }) {
   const { video } = route.params;
@@ -21,7 +20,7 @@ export default function VideoPlayerScreen({ route }) {
   const [sliderValue, setSliderValue] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
   const [duration, setDuration] = useState(1);
-  const [videoUri, setVideoUri] = useState(video.url); // ✅ for offline path
+  const [videoUri, setVideoUri] = useState(video.url); 
 
   useEffect(() => {
     const setup = async () => {
@@ -30,7 +29,6 @@ export default function VideoPlayerScreen({ route }) {
           playsInSilentModeIOS: true,
         });
 
-        // ✅ Check if video is downloaded
         const localPath = await isVideoDownloaded(video.id);
         if (localPath) {
           setVideoUri(localPath);
@@ -103,7 +101,7 @@ export default function VideoPlayerScreen({ route }) {
       <View style={styles.videoWrapper}>
         <Video
           ref={videoRef}
-          source={{ uri: videoUri }} // ✅ Use local file or remote URL
+          source={{ uri: videoUri }}
           style={styles.video}
           resizeMode="contain"
           onPlaybackStatusUpdate={onPlaybackStatusUpdate}

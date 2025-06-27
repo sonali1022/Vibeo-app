@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -22,32 +22,38 @@ const VIDEO_LIST = [
     title: 'Big Buck Bunny',
     url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     thumbnail: 'https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217',
+    durationMillis: 596000, // 9 min 56 sec
   },
   {
     id: '2',
     title: 'Sintel',
     url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
     thumbnail: 'https://i.ytimg.com/vi/eRsGyueVLvQ/maxresdefault.jpg',
+    durationMillis: 887000, // 14 min 47 sec
   },
   {
     id: '3',
     title: 'Tears of Steel',
     url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
     thumbnail: 'https://i3.ytimg.com/vi/R6MlUcmOul8/maxresdefault.jpg',
+    durationMillis: 734000, // 12 min 14 sec
   },
   {
     id: '4',
     title: 'For Bigger Blazes',
     url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
     thumbnail: 'https://dummyimage.com/600x400/000/fff&text=For+Bigger+Blazes',
+    durationMillis: 15000, // 15 sec
   },
   {
     id: '5',
     title: 'Elephants Dream',
     url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Elephants_Dream_poster_big.jpg/480px-Elephants_Dream_poster_big.jpg',
+    durationMillis: 636000, // 10 min 36 sec
   },
 ];
+
 
 const getDownloadPath = (id) => `${FileSystem.documentDirectory}${id}.mp4`;
 
@@ -79,12 +85,13 @@ export default function HomeScreen({ navigation }) {
             const localPath = getDownloadPath(video.id);
             const fileInfo = await FileSystem.getInfoAsync(localPath);
 
-            const durationMillis = video.id === '4' ? 15000 : video.id === '1' ? 600000 : 300000;
+            const durationText = new Date(video.durationMillis)
+              .toISOString()
+              .substr(14, 5);
 
             newMeta[video.id] = {
               ...video,
-              durationMillis,
-              durationText: new Date(durationMillis).toISOString().substr(14, 5),
+              durationText,
             };
 
             newProgress[video.id] = progress || 0;
@@ -232,7 +239,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     paddingTop: 0,
-    paddingBottom: 30,
+    paddingBottom: 15,
     alignItems: 'center',
     borderBottomColor: '#222',
     borderBottomWidth: 1,
